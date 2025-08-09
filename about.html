@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Gadget Guru</title>
+    <!-- Tailwind CSS CDN - This link handles all the styling and responsiveness -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons (used in trust badges and contact cards) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom Font - Ensures consistency with your other pages */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Custom styling for the page title underline effect */
+        .page-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: #ef4444; /* Tailwind red-500 */
+            margin: 0.5rem auto;
+        }
+
+        /* Custom hover effect for contact info links */
+        .contact-info a {
+            transition: color 0.3s ease;
+        }
+        .contact-info a:hover {
+            color: #ef4444; /* Tailwind red-500 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- ===================================== -->
+    <!-- 1. HEADER SECTION (Consistent with index.html and products.html) -->
+    <!-- ===================================== -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <!-- LOGO: Replace the 'src' with your logo image link -->
+            <a href="index.html" class="flex items-center space-x-2">
+                <img src="l1.jpg" alt="Company Logo" class="h-10 w-10 rounded-full">
+                <span class="text-2xl font-bold text-red-600">Gadget Guru</span>
+            </a>
+
+            <!-- NAVIGATION: Links to main sections of your site -->
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 hover:text-red-600 font-semibold">Home</a>
+                <a href="cate.html" class="text-gray-600 hover:text-red-600 font-semibold">Products</a>
+                <a href="about.html" class="text-red-600 font-bold">About Us</a> <!-- Highlight current page -->
+                <a href="#contact-section" class="text-gray-600 hover:text-red-600 font-semibold">Contact</a>
+            </nav>
+            
+            <!-- MOBILE MENU BUTTON -->
+            <button class="md:hidden focus:outline-none mobile-menu-toggle">
+                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+        <!-- Mobile Navigation Overlay -->
+        <div class="md:hidden mobile-menu hidden bg-white shadow-lg py-4">
+            <nav class="flex flex-col items-center space-y-4">
+                <a href="index.html" class="text-gray-600 hover:text-red-600 font-semibold">Home</a>
+                <a href="products.html" class="text-gray-600 hover:text-red-600 font-semibold">Products</a>
+                <a href="about.html" class="text-red-600 font-bold">About Us</a>
+                <a href="#contact-section" class="text-gray-600 hover:text-red-600 font-semibold">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="py-16">
+        <div class="container mx-auto px-4">
+            <!-- ===================================== -->
+            <!-- 2. PAGE HEADER SECTION -->
+            <!-- Main title and tagline for the About Us page. -->
+            <!-- ===================================== -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold text-red-600 mb-4 page-title inline-block">Our Commitment to Trust & Safety</h1>
+                <p class="text-lg text-gray-600">Genuine Products | Secure Transactions | Customer Satisfaction</p>
+            </div>
+            
+            <!-- ===================================== -->
+            <!-- 3. WHY TRUST GADGET GURU SECTION -->
+            <!-- Explains your business values and includes trust badges. -->
+            <!-- To add/edit badges, copy/paste a <div> with class "badge" and change icon/text. -->
+            <!-- ===================================== -->
+            <section class="bg-white rounded-lg shadow-md p-8 mb-12">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Why Trust Gadget Guru?</h2>
+                <p class="text-center text-gray-700 max-w-3xl mx-auto mb-8">
+                    We are a registered business committed to providing 100% genuine products with manufacturer warranties. Our customers' trust is our most valuable asset, which is why we maintain complete transparency in all our transactions.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-6 mt-8">
+                    <!-- TRUST BADGE 1: Genuine Products -->
+                    <div class="bg-gray-50 rounded-lg p-4 text-center w-36 shadow-sm hover:shadow-md transition-shadow">
+                        <i class="fas fa-shield-alt text-red-600 text-3xl mb-2"></i>
+                        <div class="text-sm font-semibold">100% Genuine Products</div>
+                    </div>
+                    <!-- TRUST BADGE 2: Secure Payments -->
+                    <div class="bg-gray-50 rounded-lg p-4 text-center w-36 shadow-sm hover:shadow-md transition-shadow">
+                        <i class="fas fa-lock text-red-600 text-3xl mb-2"></i>
+                        <div class="text-sm font-semibold">Secure Payments</div>
+                    </div>
+                    <!-- TRUST BADGE 3: Fast Delivery -->
+                    <div class="bg-gray-50 rounded-lg p-4 text-center w-36 shadow-sm hover:shadow-md transition-shadow">
+                        <i class="fas fa-truck text-red-600 text-3xl mb-2"></i>
+                        <div class="text-sm font-semibold">Fast Delivery</div>
+                    </div>
+                    <!-- TRUST BADGE 4: Easy Returns -->
+                    <div class="bg-gray-50 rounded-lg p-4 text-center w-36 shadow-sm hover:shadow-md transition-shadow">
+                        <i class="fas fa-undo text-red-600 text-3xl mb-2"></i>
+                        <div class="text-sm font-semibold">Easy Returns</div>
+                    </div>
+                    <!-- TRUST BADGE 5: 24/7 Support -->
+                    <div class="bg-gray-50 rounded-lg p-4 text-center w-36 shadow-sm hover:shadow-md transition-shadow">
+                        <i class="fas fa-headset text-red-600 text-3xl mb-2"></i>
+                        <div class="text-sm font-semibold">24/7 Support</div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- ===================================== -->
+            <!-- 4. OUR STORY SECTION -->
+            <!-- Tell your company's story here. -->
+            <!-- ===================================== -->
+            <section class="mb-12">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Our Story</h2>
+                <p class="text-center text-gray-700 max-w-4xl mx-auto leading-relaxed">
+                    Founded in 2021, Gadget Guru started as a small mobile accessories shop in Kapadvanj. 
+                    Today, we serve customers across India with premium gadgets and accessories at competitive prices. 
+                    Our mission is to make quality tech accessories accessible to everyone without compromising on authenticity.
+                </p>
+            </section>
+            
+            <!-- ===================================== -->
+            <!-- 5. CONTACT US SECTION -->
+            <!-- Displays your contact information in cards. -->
+            <!-- Update the phone numbers, emails, and address below. -->
+            <!-- ===================================== -->
+            <section id="contact-section" class="mb-12">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Contact Us</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- CONTACT CARD 1: Call Us -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <i class="fas fa-phone-alt text-red-600 text-3xl mb-4"></i>
+                        <h3 class="text-xl font-bold text-red-600 mb-2">Call Us</h3>
+                        <div class="contact-info mb-1">
+                            <a href="tel:+917383234749" class="text-gray-700">+91 7383234749</a>
+                        </div>
+                        <div class="contact-info mb-2">
+                            <a href="tel:+919898786521" class="text-gray-700">+91 9898786521</a>
+                        </div>
+                        <p class="text-sm text-gray-500">Mon-Sun: 9AM - 10PM</p>
+                    </div>
+                    
+                    <!-- CONTACT CARD 2: Email Us -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <i class="fas fa-envelope text-red-600 text-3xl mb-4"></i>
+                        <h3 class="text-xl font-bold text-red-600 mb-2">Email Us</h3>
+                        <!-- Added 'break-all' to ensure long email addresses wrap properly -->
+                        <div class="contact-info mb-1 break-all"> 
+                            <a href="mailto:info@gadgetwale.com" class="text-gray-700">imrozshaikh6122@gmail.com</a>
+                        </div>
+                        <div class="contact-info mb-2 break-all">
+                            <a href="mailto:support@gadgetwale.com" class="text-gray-700">ayanshai414@gmail.com</a>
+                        </div>
+                        <p class="text-sm text-gray-500">Response within 24 hours</p>
+                    </div>
+                    
+                    <!-- CONTACT CARD 3: Visit Us -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <i class="fas fa-map-marker-alt text-red-600 text-3xl mb-4"></i>
+						<a href="https://maps.app.goo.gl/CWjFUN6uXzbBj4GJA">
+                        <h3 class="text-xl font-bold text-red-600 mb-2">Visit Us</h3>
+                        <div class="contact-info text-gray-700 mb-2">
+                            Fone book<br>
+                            Near Town Hall,<br>
+                            Kapadvanj - 387620
+                        </div></a>
+                        <p class="text-sm text-gray-500">Open Mon-Sun: 9AM - 10PM</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+   <!-- 6. Inside your <footer> section, find the <p> tag for your copyright -->
+<footer class="bg-gray-800 text-gray-300 py-8">
+    <div class="container mx-auto px-4 text-center">
+        <p>&copy; 2025 Gadget Guru. All rights reserved.</p>
+        <!-- ADD THIS LINE BELOW THE COPYRIGHT PARAGRAPH -->
+        <p class="text-sm text-gray-400 mt-2">🚚 We offer All India Delivery!</p>
+        <div class="social-links mt-4 space-x-4">
+            <a href="#" class="hover:text-red-600">Facebook</a>
+            <a href="#" class="hover:text-red-600">Instagram</a>
+			<a href="#" class="hover:text-red-600">Telegram</a>
+			<a href="#" class="hover:text-red-600">WhatsApp</a>
+        </div>
+    </div>
+</footer>
+
+    <!-- ===================================== -->
+    <!-- 7. JAVASCRIPT FOR MOBILE MENU -->
+    <!-- This script handles the mobile navigation toggle. -->
+    <!-- ===================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+
+            if (mobileMenuToggle && mobileMenu) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
