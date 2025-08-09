@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gadget Guru - Products</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            object-fit: contain,cover;
+            height: 300px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- ===================================== -->
+    <!-- HEADER SECTION (Same as index.html for consistency) -->
+    <!-- ===================================== -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-2">
+                <img src="l1.jpg" alt="Company Logo" class="h-10 w-10 rounded-full">
+                <span class="text-2xl font-bold text-red-600">Gadget Guru</span>
+            </a>
+
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 hover:text-red-600 font-semibold">Home</a>
+                <a href="index.html#latest-offers" class="text-gray-600 hover:text-red-600 font-semibold">Latest Offers</a>
+                <a href="index.html#combo-offers" class="text-gray-600 hover:text-red-600 font-semibold">Combos</a>
+                <a href="index.html#bogo-offers" class="text-gray-600 hover:text-red-600 font-semibold">Buy One Get One Free</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-red-600 font-semibold">Contact</a>
+            </nav>
+            
+            <button class="md:hidden focus:outline-none mobile-menu-toggle">
+                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="md:hidden mobile-menu hidden bg-white shadow-lg py-4">
+            <nav class="flex flex-col items-center space-y-4">
+                <a href="index.html" class="text-gray-600 hover:text-red-600 font-semibold">Home</a>
+                <a href="index.html#latest-offers" class="text-gray-600 hover:text-red-600 font-semibold">Latest Offers</a>
+                <a href="index.html#combo-offers" class="text-gray-600 hover:text-red-600 font-semibold">Combos</a>
+                <a href="index.html#bogo-offers" class="text-gray-600 hover:text-red-600 font-semibold">Buy One Get One Free</a>
+                <a href="about.html#contact" class="text-gray-600 hover:text-red-600 font-semibold">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="py-16">
+        <div class="container mx-auto px-4">
+            <!-- Dynamic Heading for the Category -->
+            <h2 id="category-title" class="text-3xl font-bold text-center mb-10 text-red-600">All Products</h2>
+            
+            <!-- This is where the products will be displayed dynamically by JavaScript -->
+            <div id="product-list-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <!-- Product cards will be inserted here by JavaScript -->
+            </div>
+
+            <!-- Message if no products are found for a category -->
+            <div id="no-products-message" class="hidden text-center text-gray-600 text-lg mt-10">
+                No products found for this category. Please check back later!
+            </div>
+        </div>
+    </main>
+
+    <!-- ===================================== -->
+    <!-- FOOTER SECTION (Same as index.html for consistency) -->
+    <!-- ===================================== -->
+    <footer id="contact" class="bg-gray-800 text-gray-300 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Gadget Guru. All rights reserved.</p>
+            <div class="social-links mt-4 space-x-4">
+                <a href="#" class="hover:text-red-600">Facebook</a>
+                <a href="#" class="hover:text-red-600">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================================== -->
+    <!-- JAVASCRIPT FOR DYNAMIC PRODUCT LOADING -->
+    <!-- This script reads the URL and displays relevant products. -->
+    <!-- To add/edit products, modify the 'allProducts' array below. -->
+    <!-- ===================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // YOUR WHATSAPP NUMBER: Replace '911234567890' with your number including the country code.
+            const whatsappNumber = '917383234749'; 
+
+            // Mobile menu toggle
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+
+            if (mobileMenuToggle && mobileMenu) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // --- PRODUCT DATA ---
+            // This is your central list of all products.
+            // Add new products here, and assign them one or more categories.
+            const allProducts = [
+                // Earbuds
+                { id: 'earbuds-pro', name: 'CMF buds', description: 'Noise-cancelling audio for a distraction-free experience.', price: '449', image: 'b5.jpg', categories: ['earbuds', 'latest-offers'] },
+                { id: 'earbuds-x2', name: 'Airpods pro ', description: 'experience the ultimate sound quality!', price: '499', image: 'b2.jpg', categories: ['earbuds', 'latest-offers'] },
+                { id: 'earbuds-lite', name: 'Noise Master Buds', description: 'Lightweight and comfortable for all-day wear.', price: '525', image: 'b3.jpg', categories: ['earbuds'] },
+                
+                // Speakers
+                { id: 'portable-speaker', name: 'MZ S675 Speaker', description: 'Powerful sound in a compact, portable design.', price: '649', image: 'mz3.jpg', categories: ['speakers', 'latest-offers'] },
+                { id: 'bluetooth-speaker-mini', name: 'Bluetooth Speaker Mini', description: 'Pocket-sized speaker with surprisingly big sound.', price: '249', image: 'sp3.jpg', categories: ['speakers'] },
+                
+                // Chargers
+                { id: 'fast-charger', name: 'Samsung Fast Charger', description: 'Charge your devices at lightning speed with 45w.', price: '299', image: 'ch8.jpg', categories: ['chargers', 'latest-offers'] },
+                { id: 'fast-charger-pack', name: 'Fast Charging cable', description: 'Get any cable with same price!', price: '199', image: 'ch3.jpg', categories: ['chargers', 'combo-offers'] },
+                { id: 'wireless-charger', name: 'Wireless Charger Pad', description: 'Effortless charging for compatible devices.', price: '525', image: 'wr.jpg', categories: ['chargers', 'accessories'] },
+
+                // Accessories
+                { id: 'smartwatch-v2', name: 'Smartwatch Ultra', description: 'Track your fitness and stay connected on the go.', price: '449', image: 'smart.jpg.jpg', categories: ['accessories', 'latest-offers'] },
+                { id: 'power-bank', name: 'Boat Power Bank', description: 'Never run out of battery with our high-capacity power bank.', price: '649', image: 'po1.jpg', categories: ['accessories', 'latest-offers'] },
+                { id: 'noise-cancelling-headphones', name: 'Noise-Cancelling Headphones', description: 'Purchase one set of headphones and get another free!', price: '599', image: 'p9.jpg', categories: ['accessories', 'bogo-offers'] },
+                { id: 'phone-stand', name: 'Adjustable Phone Stand', description: 'Perfect for hands-free viewing and video calls.', price: '3,999', image: 'st2.jpg', categories: ['accessories'] },
+
+                // Combo Offers
+                { id: 'earbuds-charger-combo', name: 'Buds3 pro & Charger Combo', description: 'Get our best-selling earbuds and a fast charger together for a discounted price.', price: '799', image: 'samcombo.jpg', categories: ['combo-offers'] },
+                { id: 'speaker-powerbank-combo', name: 'Speaker & Powerbank Combo', description: 'Everything you need for music on the go. Great for travel!', price: '849', image: 'co3.jpg', categories: ['combo-offers'] },
+                { id: 'smartwatch-headphone-combo', name: 'Smartwatch & Airpods Combo', description: 'Monitor your health and enjoy your music with this perfect duo.', price: '1,099', image: 's10co.jpg', categories: ['combo-offers'] },
+            ];
+
+            // Function to get query parameters from the URL
+            function getQueryParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+
+            // Function to display products
+            function displayProducts(productsToDisplay, categoryName) {
+                const productListGrid = document.getElementById('product-list-grid');
+                const categoryTitle = document.getElementById('category-title');
+                const noProductsMessage = document.getElementById('no-products-message');
+                
+                productListGrid.innerHTML = ''; // Clear existing products
+                
+                // Set the title based on the category
+                if (categoryName) {
+                    categoryTitle.textContent = categoryName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') + ' Gadgets';
+                } else {
+                    categoryTitle.textContent = 'All Products';
+                }
+
+                if (productsToDisplay.length === 0) {
+                    noProductsMessage.classList.remove('hidden'); // Show message if no products
+                } else {
+                    noProductsMessage.classList.add('hidden'); // Hide message if products are found
+                    productsToDisplay.forEach(product => {
+                        const productCardHtml = `
+                            <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
+                                <a href="product-details.html?id=${product.id}" class="block">
+                                    <img src="${product.image}" alt="${product.name}" class="w-full product-image">
+                                </a>
+                                <div class="p-6 text-center">
+                                    <h3 class="text-xl font-bold mb-2">${product.name}</h3>
+                                    <p class="text-gray-600 mb-4">${product.description}</p>
+                                    <p class="text-xl font-semibold text-red-600 mb-4">₹${product.price}</p>
+                                    <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full" data-product="${product.name}">Shop Now</button>
+                                </div>
+                            </div>
+                        `;
+                        productListGrid.insertAdjacentHTML('beforeend', productCardHtml);
+                    });
+                }
+
+                // Attach WhatsApp event listeners to newly created buttons
+                attachShopNowListeners();
+            }
+
+            // Function to attach event listeners to "Shop Now" buttons
+            function attachShopNowListeners() {
+                const shopItemBtns = document.querySelectorAll('.shop-item-btn');
+                shopItemBtns.forEach(button => {
+                    button.removeEventListener('click', handleShopNowClick); // Prevent duplicate listeners
+                    button.addEventListener('click', handleShopNowClick);
+                });
+            }
+
+            // Event handler for "Shop Now" buttons
+            function handleShopNowClick(event) {
+                const productName = event.target.getAttribute('data-product');
+                if (productName) {
+                    const message = encodeURIComponent(`Hello, I am interested in purchasing the ${productName}. Please provide more details.`);
+                    window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+                }
+            }
+
+            // --- MAIN LOGIC TO FILTER AND DISPLAY PRODUCTS ---
+            const requestedCategory = getQueryParam('category');
+            let filteredProducts = [];
+            let displayTitle = '';
+
+            if (requestedCategory) {
+                // Filter products based on the category in the URL
+                filteredProducts = allProducts.filter(product => 
+                    product.categories.includes(requestedCategory)
+                );
+                displayTitle = requestedCategory;
+            } else {
+                // If no category is specified, show all products
+                filteredProducts = allProducts;
+                displayTitle = 'All Products';
+            }
+
+            // Display the products
+            displayProducts(filteredProducts, displayTitle);
+        });
+    </script>
+</body>
+</html>

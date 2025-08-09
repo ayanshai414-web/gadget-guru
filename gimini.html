@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gadget Guru - Your Tech Destination</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Add a custom font */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        /* Custom styles for sections and cards to add a little more depth */
+        .card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            object-fit: cover; /* Ensures images fill their container without distortion */
+            height: 300px;
+        }
+
+        /* Responsive Navbar for mobile */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="#" class="flex items-center space-x-2">
+                <img src="https://via.placeholder.com/50x50.png?text=LOGO" alt="Company Logo" class="h-10 w-10">
+                <span class="text-2xl font-bold text-red-600">Gadget Guru</span>
+            </a>
+
+            <nav class="hidden md:flex items-center space-x-6 nav-menu">
+                <a href="#categories" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Categories</a>
+                <a href="#latest-offers" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Latest Offers</a>
+                <a href="#combo-offers" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Combos</a>
+                <a href="#bogo-offers" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Buy One Get One Free</a>
+                <a href="about.html" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Contact</a>
+            </nav>
+            
+            <button class="md:hidden mobile-menu-btn focus:outline-none">
+                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="bg-gradient-to-r from-red-600 to-red-800 text-white py-20">
+            <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+                <div class="md:w-1/2">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Discover the Latest in Gadgets</h1>
+                    <p class="text-lg mb-6">Your one-stop shop for airbuds, speakers, chargers, and all your tech accessories.</p>
+                    <button id="shop-now-btn" class="bg-white text-red-600 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition-colors duration-300">Shop Now</button>
+                </div>
+                <div class="md:w-1/2">
+                    <img src="https://via.placeholder.com/500x350.png?text=Hero+Image" alt="Hero Image" class="rounded-lg shadow-2xl w-full">
+                </div>
+            </div>
+        </section>
+
+        <section id="categories" class="py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-10">Shop by Categories</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl card cursor-pointer">
+					<a href="#">
+                        <img src="samsungbuds.jpg" alt="Earbuds" class="mx-auto mb-4 rounded-full">
+                        <h3 class="text-xl font-semibold">Earbuds</h3></a>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl card cursor-pointer">
+					<a href="#">
+                        <img src="radiojpg.jpg" alt="Speakers" class="mx-auto mb-4 rounded-full">
+                        <h3 class="text-xl font-semibold">Speakers</h3></a>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl card cursor-pointer">
+					<a href="#">
+                        <img src="https://via.placeholder.com/150x150.png?text=Chargers" alt="Chargers" class="mx-auto mb-4 rounded-full">
+                        <h3 class="text-xl font-semibold">Chargers</h3></a>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl card cursor-pointer">
+					<a href="#">
+                        <img src="https://via.placeholder.com/150x150.png?text=Accessories" alt="Accessories" class="mx-auto mb-4 rounded-full">
+                        <h3 class="text-xl font-semibold">Accessories</h3></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-8 border-gray-300">
+
+        <section id="latest-offers" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-10 text-red-600">Latest Offers ✨</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
+					
+                        <img src="charger.jpg.jpg" alt="Samsung Charger" class="w-full product-image">
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-bold mb-2">Samsung Charger</h3>
+                            <p class="text-gray-600 mb-4">ULtra fast charger for amazing experience.</p>
+                            <p class="text-xl font-semibold text-red-600 mb-4">₹599</p>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Earbuds Pro">Shop Now</button>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
+                        <img src="smart.jpg.jpg" alt="Smartwatch ULtra" class="w-full product-image">
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-bold mb-2">Smartwatch Ultra</h3>
+                            <p class="text-gray-600 mb-4">Track your fitness and stay connected on the go.</p>
+                            <p class="text-xl font-semibold text-red-600 mb-4">₹599</p>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Smartwatch V2">Shop Now</button>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
+                        <img src="mz.jpg.jpg" alt="MZ M415sp speaker" class="w-full product-image">
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-bold mb-2">MZ Wireless Speaker</h3>
+                            <p class="text-gray-600 mb-4">Powerful sound in a compact, portable design.</p>
+                            <p class="text-xl font-semibold text-red-600 mb-4">₹699</p>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Portable Speaker">Shop Now</button>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
+                        <img src="realme.jpg.jpg" alt="buds" class="w-full product-image">
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-bold mb-2">Realme Buds T200 Lite</h3>
+                            <p class="text-gray-600 mb-4">Make you music experience better.</p>
+                            <p class="text-xl font-semibold text-red-600 mb-4">₹499</p>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Power Bank">Shop Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-8 border-gray-300">
+
+        <section id="bogo-offers" class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-10 text-red-600">Buy One Get One Free 🛍️</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
+                        <div class="relative">
+                            <img src="https://via.placeholder.com/400x300.png?text=BOGO+Airbuds" alt="BOGO Airbuds" class="w-full product-image">
+                            <span class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">BOGO</span>
+                        </div>
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-bold mb-2">Airbuds X2</h3>
+                            <p class="text-gray-600 mb-4">Buy one pair of Airbuds X2, get a second pair absolutely free!</p>
+                            <p class="text-xl font-semibold text-red-600 mb-4">$69.99</p>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="BOGO Airbuds X2">Shop Now</button>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
+                        <div class="relative">
+                            <img src="https://via.placeholder.com/400x300.png?text=BOGO+Chargers" alt="BOGO Chargers" class="w-full product-image">
+                            <span class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">BOGO</span>
+                        </div>
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-bold mb-2">Fast Charger Pack</h3>
+                            <p class="text-gray-600 mb-4">Get two fast chargers for the price of one!</p>
+                            <p class="text-xl font-semibold text-red-600 mb-4">$29.99</p>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="BOGO Fast Charger Pack">Shop Now</button>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
+                        <div class="relative">
+                            <img src="https://via.placeholder.com/400x300.png?text=BOGO+Headphones" alt="BOGO Headphones" class="w-full product-image">
+                            <span class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">BOGO</span>
+                        </div>
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-bold mb-2">Noise-Cancelling Headphones</h3>
+                            <p class="text-gray-600 mb-4">Purchase one set of headphones and get another free!</p>
+                            <p class="text-xl font-semibold text-red-600 mb-4">$99.99</p>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="BOGO Noise-Cancelling Headphones">Shop Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-8 border-gray-300">
+
+        <section id="combo-offers" class="py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-10 text-red-600">Combo Offers 🎁</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
+                        <div class="relative">
+                            <img src="https://via.placeholder.com/400x300.png?text=Earbuds+and+Charger+Combo" alt="Earbuds & Charger Combo" class="w-full product-image">
+                            <span class="absolute top-4 right-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Combo</span>
+                        </div>
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-bold mb-2">Earbuds & Charger Combo</h3>
+                            <p class="text-gray-600 mb-4">Get our best-selling earbuds and a fast charger together for a discounted price.</p>
+                            <p class="text-xl font-semibold text-red-600 mb-4">$79.99</p>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Earbuds & Charger Combo">Shop Now</button>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
+                        <div class="relative">
+                            <img src="https://via.placeholder.com/400x300.png?text=Speaker+and+Powerbank+Combo" alt="Speaker & Powerbank Combo" class="w-full product-image">
+                            <span class="absolute top-4 right-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Combo</span>
+                        </div>
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-bold mb-2">Speaker & Powerbank Combo</h3>
+                            <p class="text-gray-600 mb-4">Everything you need for music on the go. Great for travel!</p>
+                            <p class="text-xl font-semibold text-red-600 mb-4">$69.99</p>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Speaker & Powerbank Combo">Shop Now</button>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
+                        <div class="relative">
+                            <img src="https://via.placeholder.com/400x300.png?text=Smartwatch+and+Headphone+Combo" alt="Smartwatch & Headphone Combo" class="w-full product-image">
+                            <span class="absolute top-4 right-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Combo</span>
+                        </div>
+                        <div class="p-6 text-center">
+                            <h3 class="text-xl font-bold mb-2">Smartwatch & Headphone Combo</h3>
+                            <p class="text-gray-600 mb-4">Monitor your health and enjoy your music with this perfect duo.</p>
+                            <p class="text-xl font-semibold text-red-600 mb-4">$199.99</p>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Smartwatch & Headphone Combo">Shop Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact" class="bg-gray-800 text-gray-300 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Gadget Guru. All rights reserved.</p>
+            <div class="social-links mt-4 space-x-4">
+                <a href="#" class="hover:text-red-600 transition-colors duration-300">Facebook</a>
+                <a href="#" class="hover:text-red-600 transition-colors duration-300">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Your WhatsApp number (replace with your actual number)
+            const whatsappNumber = '917383234749'; // Example: Replace with your number with country code
+            
+            // Toggle mobile menu
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navMenu = document.querySelector('.nav-menu');
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    navMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Universal "Shop Now" button from the hero section
+            const shopNowBtn = document.getElementById('shop-now-btn');
+            if (shopNowBtn) {
+                shopNowBtn.addEventListener('click', function() {
+                    const message = encodeURIComponent('Hello, I would like to know more about the gadgets you offer.');
+                    window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+                });
+            }
+
+            // Individual "Shop Now" buttons for each product card
+            const shopItemBtns = document.querySelectorAll('.shop-item-btn');
+            shopItemBtns.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    const productName = event.target.getAttribute('data-product');
+                    if (productName) {
+                        const message = encodeURIComponent(`Hello, I am interested in purchasing the ${productName}. Please provide more details.`);
+                        window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
