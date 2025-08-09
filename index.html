@@ -28,14 +28,7 @@
         }
 
         /* Responsive Navbar for mobile */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-            .mobile-menu-btn {
-                display: block;
-            }
-        }
+     
 	
  
   .video-container {
@@ -80,7 +73,15 @@
                 <a href="#bogo-offers" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Buy One Get One Free</a>
                 <a href="about.html#contact" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Contact</a>
             </nav>
-            
+            <div class="md:hidden mobile-menu hidden bg-white shadow-lg py-4">
+            <nav class="hidden md:flex items-center space-x-6 nav-menu">
+                <a href="#categories" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Categories</a>
+                <a href="#latest-offers" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Latest Offers</a>
+                <a href="#combo-offers" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Combos</a>
+                <a href="#bogo-offers" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Buy One Get One Free</a>
+                <a href="about.html#contact" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Contact</a>
+            </nav>
+        </div>
             <button class="md:hidden mobile-menu-btn focus:outline-none">
                 <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
@@ -142,7 +143,7 @@
         <section id="latest-offers" class="py-16 bg-white">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-10 text-red-600">Latest Offers ✨</h2>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
 					
                         <img src="ch5.jpg" alt="Samsung Charger 120w" class="w-full product-image">
@@ -331,5 +332,6 @@
 </body>
 
 </html>
+
 
 
