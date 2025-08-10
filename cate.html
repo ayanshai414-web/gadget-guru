@@ -11,7 +11,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f7f7f7;
-            overflow-x: hidden; /* Prevent horizontal scrolling on mobile */
+            overflow-x: hidden;
         }
 
         .card {
@@ -24,9 +24,9 @@
         }
 
         .product-image {
-            object-fit: cover; /* This is the key change for consistent sizing */
+            object-fit: contain;
             height: 300px;
-            width: 100%; /* Ensure the image spans the full width of the card */
+            width: 60%;
         }
 
         /* Improved Mobile Menu Styles */
@@ -37,6 +37,29 @@
 
         .mobile-menu.open {
             transform: translateX(0);
+        }
+
+        /* Custom styles for the slider */
+        .slider-container {
+            overflow-x: scroll;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .slider-container::-webkit-scrollbar {
+            display: none; /* Safari and Chrome */
+        }
+
+        .slider-item {
+            flex: 0 0 300px; /* Adjust width as needed */
+            max-width: 300px;
+        }
+
+        @media (min-width: 640px) {
+            .slider-item {
+                flex: 0 0 calc(33.333% - 16px); /* Show 3 items with gap on larger screens */
+                max-width: calc(33.333% - 16px);
+            }
         }
     </style>
 </head>
@@ -84,6 +107,11 @@
         <div class="container mx-auto px-4">
             <h2 id="category-title" class="text-3xl font-bold text-center mb-10 text-red-600">All Products</h2>
             
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Our Top Picks</h3>
+                <div id="top-picks-slider" class="flex space-x-6 pb-4 slider-container">
+                    </div>
+            </div>
             <div id="product-list-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 </div>
 
@@ -109,7 +137,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const whatsappNumber = '917383234749';
 
-            // --- MOBILE MENU LOGIC (Reusing the improved logic from previous response) ---
+            // MOBILE MENU LOGIC
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const closeMobileMenuBtn = document.getElementById('close-mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -138,7 +166,7 @@
                 link.addEventListener('click', closeMobileMenu);
             });
 
-            // --- PRODUCT DATA ---
+            // PRODUCT DATA
             const allProducts = [
                 // Earbuds
                 { id: 'earbuds-pro', name: 'CMF buds', description: 'Noise-cancelling audio for a distraction-free experience.', price: '449', image: 'b5.jpg', categories: ['earbuds', 'latest-offers'] },
@@ -180,7 +208,6 @@
                 
                 productListGrid.innerHTML = ''; // Clear existing products
                 
-                // Set the title based on the category
                 if (categoryName && categoryName !== 'All Products') {
                     categoryTitle.textContent = categoryName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') + ' Gadgets';
                 } else {
@@ -211,6 +238,34 @@
                 attachShopNowListeners();
             }
 
+            // Function to populate the slider with a subset of products
+            function populateSlider() {
+                const sliderContainer = document.getElementById('top-picks-slider');
+                sliderContainer.innerHTML = ''; // Clear existing items
+
+                // Select a few products for the slider. You can choose any products you want to highlight.
+                // Here, we'll just take the first three products from the main list.
+                const topPicks = allProducts.slice(0, 3); 
+
+                topPicks.forEach(product => {
+                    const sliderItemHtml = `
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden card slider-item">
+                            <a href="product-details.html?id=${product.id}" class="block">
+                                <img src="${product.image}" alt="${product.name}" class="w-full product-image">
+                            </a>
+                            <div class="p-6 text-center">
+                                <h3 class="text-xl font-bold mb-2">${product.name}</h3>
+                                <p class="text-gray-600 mb-4">${product.description}</p>
+                                <p class="text-xl font-semibold text-red-600 mb-4">₹${product.price}</p>
+                                <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full" data-product="${product.name}">Shop Now</button>
+                            </div>
+                        </div>
+                    `;
+                    sliderContainer.insertAdjacentHTML('beforeend', sliderItemHtml);
+                });
+                attachShopNowListeners();
+            }
+
             // Function to attach event listeners to "Shop Now" buttons
             function attachShopNowListeners() {
                 const shopItemBtns = document.querySelectorAll('.shop-item-btn');
@@ -229,7 +284,7 @@
                 }
             }
 
-            // --- MAIN LOGIC TO FILTER AND DISPLAY PRODUCTS ---
+            // MAIN LOGIC TO FILTER AND DISPLAY PRODUCTS
             const requestedCategory = getQueryParam('category');
             let filteredProducts = [];
             let displayTitle = '';
@@ -243,6 +298,7 @@
             }
 
             displayProducts(filteredProducts, displayTitle);
+            populateSlider(); // Call this function to display the slider
         });
     </script>
 </body>
