@@ -6,58 +6,76 @@
     <title>Gadget Guru - Your Tech Destination</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Add a custom font */
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f7f7f7;
+            overflow-x: hidden; /* Hide horizontal scrollbar */
         }
-
-        /* Custom styles for sections and cards to add a little more depth */
         .card {
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
-
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
-
         .product-image {
-            object-fit: contain; /* Ensures images fill their container without distortion */
+            object-fit: contain;
             height: 300px;
         }
-
-        /* Responsive Navbar for mobile */
-     @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-            .mobile-menu-btn {
-                display: block;
+        .video-container {
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            padding-bottom: 50%;
+            height: 0;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .my-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* Mobile menu styles */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        .slider-container {
+            overflow: hidden;
+        }
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slider-card {
+            flex: 0 0 auto;
+            width: 100%; /* Default width for one card at a time */
+            padding: 0 1rem; /* Adjust padding for spacing */
+            box-sizing: border-box;
+        }
+        @media (min-width: 768px) {
+            .slider-card {
+                width: calc(100% / 3); /* Show 3 cards on medium screens */
             }
         }
-	
- 
-  .video-container {
-    width: 100%;                  /* Set a width, e.g., 100% of its parent */
-    max-width: 400px;             /* Define a maximum size */
-    position: relative;           /* This is crucial for the padding trick */
-    padding-bottom: 50%;         /* This makes the height equal to the width */
-    height: 0;                    /* Resets the height to 0 to make the padding work */
-    
-    border-radius: 15px;          /* Optional: for rounded corners */
-    overflow: hidden;             /* Essential for clipping the corners */
-  }
-
-  .my-video {
-    position: absolute;           /* Position the video absolutely within the container */
-    top: 0;
-    left: 0;
-    width: 100%;                  /* Make the video fill the entire container */
-    height: 100%;
-    object-fit: cover;            /* This is key! It ensures the video fills the square without being stretched. */
-  }
-
+        @media (min-width: 1024px) {
+            .slider-card {
+                width: calc(100% / 4); /* Show 4 cards on large screens */
+            }
+        }
+        .slider-button {
+            transition: background-color 0.3s;
+        }
+        .slider-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
@@ -65,28 +83,39 @@
 
     <header class="bg-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-          
-<!-- Inside your <header> section, find the <a> tag for your logo -->
-<div class="flex items-center space-x-2">
-    <img src="l1.jpg" alt="Company Logo" class="h-10 w-10 rounded-full">
-    <span class="text-2xl font-bold text-red-600">Gadget Guru</span>
-    <!-- ADD THIS LINE BELOW YOUR LOGO SPAN -->
-    <span class="text-sm text-gray-500 ml-4 hidden sm:block">🚚 All India Delivery!</span>
-</div>
-            
-              <nav class="hidden md:flex items-center space-x-6 nav-menu">
+            <div class="flex items-center space-x-2">
+                <img src="l1.jpg" alt="Company Logo" class="h-10 w-10 rounded-full">
+                <span class="text-2xl font-bold text-red-600">Gadget Guru</span>
+                <span class="text-sm text-gray-500 ml-4 hidden sm:block">🚚 All India Delivery!</span>
+            </div>
+            <nav class="hidden md:flex items-center space-x-6">
                 <a href="#categories" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Categories</a>
                 <a href="#latest-offers" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Latest Offers</a>
                 <a href="#combo-offers" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Combos</a>
                 <a href="#bogo-offers" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Buy One Get One Free</a>
                 <a href="about.html#contact" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold">Contact</a>
             </nav>
-            <button class="md:hidden mobile-menu-btn focus:outline-none">
-                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <button id="mobile-menu-btn" class="md:hidden mobile-menu-btn focus:outline-none">
+                <svg id="menu-icon" class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                 </svg>
             </button>
         </div>
+        <div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 bg-white shadow-lg p-6 z-50 mobile-menu">
+            <button id="close-mobile-menu-btn" class="absolute top-4 right-4 focus:outline-none">
+                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <nav class="flex flex-col space-y-4 mt-12">
+                <a href="#categories" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold text-lg">Categories</a>
+                <a href="#latest-offers" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold text-lg">Latest Offers</a>
+                <a href="#combo-offers" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold text-lg">Combos</a>
+                <a href="#bogo-offers" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold text-lg">Buy One Get One Free</a>
+                <a href="about.html#contact" class="text-gray-600 hover:text-red-600 transition-colors duration-300 font-semibold text-lg">Contact</a>
+            </nav>
+        </div>
+        <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
     </header>
 
     <main>
@@ -97,15 +126,14 @@
                     <p class="text-lg mb-6">Your one-stop shop for airbuds, speakers, chargers, and all your tech accessories.</p>
                     <button id="shop-now-btn" class="bg-white text-red-600 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition-colors duration-300">Shop Now</button>
                 </div>
-               <div class="md:w-1/2 flex justify-center items-center">
-			   <!-- Added flex for better centering if image is smaller than container -->
-				<div class="video-container">
-				<video class="my-video" autoplay muted loop playsinline>
-					<source src="v1.mp4" type="video/mp4">
-							Your browser does not support the video tag.
-					</video>
-				</div>
-			</div>
+                <div class="md:w-1/2 flex justify-center items-center">
+                    <div class="video-container">
+                        <video class="my-video" autoplay muted loop playsinline>
+                            <source src="v1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -114,24 +142,28 @@
                 <h2 class="text-3xl font-bold text-center mb-10">Shop by Categories</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                     <div class="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl card cursor-pointer">
-					<a href="cate.html">
-                        <img src="e1.jpg" alt="Earbuds" class="mx-auto mb-4 rounded-full">
-                        <h3 class="text-xl font-semibold">Earbuds</h3></a>
+                        <a href="cate.html">
+                            <img src="e1.jpg" alt="Earbuds" class="mx-auto mb-4 rounded-full">
+                            <h3 class="text-xl font-semibold">Earbuds</h3>
+                        </a>
                     </div>
                     <div class="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl card cursor-pointer">
-					<a href="cate.html">
-                        <img src="sp2.jpg" alt="Speakers" class="mx-auto mb-4 rounded-full">
-                        <h3 class="text-xl font-semibold">Speakers</h3></a>
+                        <a href="cate.html">
+                            <img src="sp2.jpg" alt="Speakers" class="mx-auto mb-4 rounded-full">
+                            <h3 class="text-xl font-semibold">Speakers</h3>
+                        </a>
                     </div>
                     <div class="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl card cursor-pointer">
-					<a href="cate.html">
-                        <img src="char1.jpg" alt="Chargers" class="mx-auto mb-4 rounded-full">
-                        <h3 class="text-xl font-semibold">Chargers</h3></a>
+                        <a href="cate.html">
+                            <img src="char1.jpg" alt="Chargers" class="mx-auto mb-4 rounded-full">
+                            <h3 class="text-xl font-semibold">Chargers</h3>
+                        </a>
                     </div>
                     <div class="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl card cursor-pointer">
-					<a href="cate.html">
-                        <img src="as1.jpg" alt="Accessories" class="mx-auto mb-4 rounded-full">
-                        <h3 class="text-xl font-semibold">Accessories</h3></a>
+                        <a href="cate.html">
+                            <img src="as1.jpg" alt="Accessories" class="mx-auto mb-4 rounded-full">
+                            <h3 class="text-xl font-semibold">Accessories</h3>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -142,48 +174,65 @@
         <section id="latest-offers" class="py-16 bg-white">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-10 text-red-600">Latest Offers ✨</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
-					
-                        <img src="ch5.jpg" alt="Samsung Charger 120w" class="w-full product-image">
-                        <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold mb-2">Samsung Charger</h3>
-                            <p class="text-gray-600 mb-4">ULtra fast charger for amazing experience.</p>
-                            <p class="text-xl font-semibold text-red-600 mb-4">₹449</p>
-                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Earbuds Pro">Shop Now</button>
-                        </div>
+                <div class="relative">
+                    <div class="slider-container">
+                        <div id="slider-wrapper" class="slider-wrapper">
+                            <div class="slider-card">
+                                <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
+                                    <img src="ch5.jpg" alt="Samsung Charger 120w" class="w-full product-image">
+                                    <div class="p-6 text-center">
+                                        <h3 class="text-xl font-bold mb-2">Samsung Charger</h3>
+                                        <p class="text-gray-600 mb-4">ULtra fast charger for amazing experience.</p>
+                                        <p class="text-xl font-semibold text-red-600 mb-4">₹449</p>
+                                        <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Samsung Charger">Shop Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slider-card">
+                                <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
+                                    <img src="s10.jpg" alt="Smartwatch s10" class="w-full product-image">
+                                    <div class="p-6 text-center">
+                                        <h3 class="text-xl font-bold mb-2">Smartwatch s10</h3>
+                                        <p class="text-gray-600 mb-4">Track your fitness and stay connected on the go.</p>
+                                        <p class="text-xl font-semibold text-red-600 mb-4">₹799</p>
+                                        <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Smartwatch s10">Shop Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slider-card">
+                                <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
+                                    <img src="mz.jpg.jpg" alt="MZ M415sp speaker" class="w-full product-image">
+                                    <div class="p-6 text-center">
+                                        <h3 class="text-xl font-bold mb-2">MZ Wireless Speaker</h3>
+                                        <p class="text-gray-600 mb-4">Powerful sound in a compact, portable design.</p>
+                                        <p class="text-xl font-semibold text-red-600 mb-4">₹549</p>
+                                        <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="MZ Wireless Speaker">Shop Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slider-card">
+                                <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
+                                    <img src="h1.jpg" alt="boat Rockerz 425 pro max" class="w-full product-image">
+                                    <div class="p-6 text-center">
+                                        <h3 class="text-xl font-bold mb-2">Boat Rockerz 425</h3>
+                                        <p class="text-gray-600 mb-4">Make you music experience better with Noise-Cancelling Headphones</p>
+                                        <p class="text-xl font-semibold text-red-600 mb-4">₹499</p>
+                                        <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Boat Rockerz 425">Shop Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
                     </div>
-                    <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
-                        <img src="s10.jpg" alt="Smartwatch s10" class="w-full product-image">
-                        <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold mb-2">Smartwatch s10</h3>
-                            <p class="text-gray-600 mb-4">Track your fitness and stay connected on the go.</p>
-                            <p class="text-xl font-semibold text-red-600 mb-4">₹799</p>
-                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Smartwatch V2">Shop Now</button>
-                        </div>
-                    </div>
-                    <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
-                        <img src="mz.jpg.jpg" alt="MZ M415sp speaker" class="w-full product-image">
-                        <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold mb-2">MZ Wireless Speaker</h3>
-                            <p class="text-gray-600 mb-4">Powerful sound in a compact, portable design.</p>
-                            <p class="text-xl font-semibold text-red-600 mb-4">₹549</p>
-                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Portable Speaker">Shop Now</button>
-                        </div>
-                    </div>
-                    <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
-                        <img src="h1.jpg" alt="boat Rockerz 425 pro max" class="w-full product-image">
-                        <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold mb-2">Boat Rockerz 425</h3>
-                            <p class="text-gray-600 mb-4">Make you music experience better with Noise-Cancelling Headphones</p>
-                            <p class="text-xl font-semibold text-red-600 mb-4">₹499</p>
-                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Power Bank">Shop Now</button>
-                        </div>
-                    </div>
+                    <button id="prev-btn" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg opacity-75 hover:opacity-100 transition-opacity z-10">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <button id="next-btn" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg opacity-75 hover:opacity-100 transition-opacity z-10">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
                 </div>
             </div>
         </section>
-
+        
         <hr class="my-8 border-gray-300">
 
         <section id="bogo-offers" class="py-16 bg-gray-50">
@@ -199,7 +248,7 @@
                             <h3 class="text-xl font-bold mb-2">Boat Airdopes</h3>
                             <p class="text-gray-600 mb-4">Buy one pair of Airdopes, get a second pair absolutely free!</p>
                             <p class="text-xl font-semibold text-red-600 mb-4">₹699</p>
-                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="BOGO Airbuds X2">Shop Now</button>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="BOGO Boat Airdopes">Shop Now</button>
                         </div>
                     </div>
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
@@ -211,7 +260,7 @@
                             <h3 class="text-xl font-bold mb-2">Boat Airdopes</h3>
                             <p class="text-gray-600 mb-4">Get two Airdopes for the price of one!</p>
                             <p class="text-xl font-semibold text-red-600 mb-4">₹699</p>
-                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="BOGO Fast Charger Pack">Shop Now</button>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="BOGO Boat Airdopes 2">Shop Now</button>
                         </div>
                     </div>
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
@@ -223,7 +272,7 @@
                             <h3 class="text-xl font-bold mb-2">Boat Airdopes</h3>
                             <p class="text-gray-600 mb-4">Purchase one Airdopes and get another free!</p>
                             <p class="text-xl font-semibold text-red-600 mb-4">₹699</p>
-                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="BOGO Noise-Cancelling Headphones">Shop Now</button>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="BOGO Boat Airdopes 3">Shop Now</button>
                         </div>
                     </div>
                 </div>
@@ -245,7 +294,7 @@
                             <h3 class="text-xl font-bold mb-2">2 in 1 combo</h3>
                             <p class="text-gray-600 mb-4">Get our best-selling Earbuds and Smartwatch together for a discounted price.</p>
                             <p class="text-xl font-semibold text-red-600 mb-4">₹1,099</p>
-                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Earbuds & Charger Combo">Shop Now</button>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="2 in 1 combo (Earbuds & Smartwatch)">Shop Now</button>
                         </div>
                     </div>
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
@@ -257,7 +306,7 @@
                             <h3 class="text-xl font-bold mb-2">5 in 1 combo</h3>
                             <p class="text-gray-600 mb-4">Everything you need for music & smartness on the go. Great for travel!</p>
                             <p class="text-xl font-semibold text-red-600 mb-4">₹999</p>
-                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Speaker & Powerbank Combo">Shop Now</button>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="5 in 1 combo">Shop Now</button>
                         </div>
                     </div>
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
@@ -269,7 +318,7 @@
                             <h3 class="text-xl font-bold mb-2">5 in 1 Combo</h3>
                             <p class="text-gray-600 mb-4">Monitor your health and enjoy your music with this perfect duo.</p>
                             <p class="text-xl font-semibold text-red-600 mb-4">₹699</p>
-                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="Smartwatch & Headphone Combo">Shop Now</button>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="5 in 1 combo (Smartwatch & Headphone)">Shop Now</button>
                         </div>
                     </div>
                 </div>
@@ -277,42 +326,108 @@
         </section>
     </main>
 
-    <!-- Inside your <footer> section, find the <p> tag for your copyright -->
-<footer class="bg-gray-800 text-gray-300 py-8">
-    <div class="container mx-auto px-4 text-center">
-        <p>&copy; 2025 Gadget Guru. All rights reserved.</p>
-        <!-- ADD THIS LINE BELOW THE COPYRIGHT PARAGRAPH -->
-        <p class="text-sm text-gray-400 mt-2">🚚 We offer All India Delivery!</p>
-        <div class="social-links mt-4 space-x-4">
-            <a href="https://www.facebook.com/share/1JhuQvHDYN/" class="hover:text-red-600">Facebook</a>
-            <a href="https://www.instagram.com/wholesale_watches_gadgets?igsh=MWZlZXVzaXlhNHM5OQ==" class="hover:text-red-600">Instagram</a>
-			<a href="#" class="hover:text-red-600">Telegram</a>
-			<a href="https://chat.whatsapp.com/JBEHnet2r1y4ARND106ALp?mode=ac_t" class="hover:text-red-600">WhatsApp</a>
+    <footer class="bg-gray-800 text-gray-300 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Gadget Guru. All rights reserved.</p>
+            <p class="text-sm text-gray-400 mt-2">🚚 We offer All India Delivery!</p>
+            <div class="social-links mt-4 space-x-4">
+                <a href="https://www.facebook.com/share/1JhuQvHDYN/" class="hover:text-red-600">Facebook</a>
+                <a href="https://www.instagram.com/wholesale_watches_gadgets?igsh=MWZlZXVzaXlhNHM5OQ==" class="hover:text-red-600">Instagram</a>
+            
+                <a href="https://chat.whatsapp.com/JBEHnet2r1y4ARND106ALp?mode=ac_t" class="hover:text-red-600">WhatsApp</a>
+            </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Your WhatsApp number (replace with your actual number)
-            const whatsappNumber = '917383234749'; // Example: Replace with your number with country code
+            const whatsappNumber = '917383234749';
             
-            // Toggle mobile menu
-            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-            // Selects the container div that holds the mobile navigation links
-            const mobileMenu = document.querySelector('.mobile-menu-container'); 
+            // --- Mobile Menu Logic ---
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const closeMobileMenuBtn = document.getElementById('close-mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('overlay');
+            const mobileNavLinks = mobileMenu.querySelectorAll('a');
 
-            // Checks if both the toggle button and the menu container exist
-            if (mobileMenuToggle && mobileMenu) {
-                // Adds a click event listener to the toggle button
-                mobileMenuToggle.addEventListener('click', () => {
-                    // Toggles the 'hidden' class on the mobile menu container.
-                    // 'hidden' makes it disappear/appear.
-                    mobileMenu.classList.toggle('hidden');
-                });
+            function openMobileMenu() {
+                mobileMenu.classList.add('open');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
             }
 
-            // Universal "Shop Now" button from the hero section
+            function closeMobileMenu() {
+                mobileMenu.classList.remove('open');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+
+            mobileMenuBtn.addEventListener('click', openMobileMenu);
+            closeMobileMenuBtn.addEventListener('click', closeMobileMenu);
+            overlay.addEventListener('click', closeMobileMenu);
+            
+            // Close menu when a link is clicked
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+
+            // --- Product Slider Logic ---
+            const sliderWrapper = document.getElementById('slider-wrapper');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const sliderCards = document.querySelectorAll('.slider-card');
+
+            let currentIndex = 0;
+            let cardWidth;
+            let visibleCards;
+
+            function updateSliderDimensions() {
+                // Determine how many cards are visible based on screen size
+                if (window.innerWidth >= 1024) {
+                    visibleCards = 4;
+                } else if (window.innerWidth >= 768) {
+                    visibleCards = 3;
+                } else {
+                    visibleCards = 1;
+                }
+                cardWidth = sliderCards[0].offsetWidth;
+                updateSliderPosition();
+            }
+
+            function updateSliderPosition() {
+                const totalCards = sliderCards.length;
+                const maxIndex = totalCards - visibleCards;
+                if (currentIndex > maxIndex) {
+                    currentIndex = maxIndex;
+                }
+                if (currentIndex < 0) {
+                    currentIndex = 0;
+                }
+                sliderWrapper.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+            }
+
+            prevBtn.addEventListener('click', () => {
+                currentIndex = Math.max(0, currentIndex - 1);
+                updateSliderPosition();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                const totalCards = sliderCards.length;
+                const maxIndex = totalCards - visibleCards;
+                currentIndex = Math.min(maxIndex, currentIndex + 1);
+                updateSliderPosition();
+            });
+
+            // Re-calculate dimensions on resize
+            window.addEventListener('resize', () => {
+                // Debounce the resize event for performance
+                let resizeTimer;
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(updateSliderDimensions, 250);
+            });
+            updateSliderDimensions(); // Initial call
+
+            // --- WhatsApp Button Logic ---
             const shopNowBtn = document.getElementById('shop-now-btn');
             if (shopNowBtn) {
                 shopNowBtn.addEventListener('click', function() {
@@ -321,7 +436,6 @@
                 });
             }
 
-            // Individual "Shop Now" buttons for each product card
             const shopItemBtns = document.querySelectorAll('.shop-item-btn');
             shopItemBtns.forEach(button => {
                 button.addEventListener('click', function(event) {
@@ -335,10 +449,4 @@
         });
     </script>
 </body>
-
 </html>
-
-
-
-
-
