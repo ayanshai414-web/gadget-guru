@@ -47,6 +47,7 @@
         .mobile-menu.open {
             transform: translateX(0);
         }
+        /* Corrected slider styles */
         .slider-container {
             overflow: hidden;
         }
@@ -55,10 +56,8 @@
             transition: transform 0.5s ease-in-out;
         }
         .slider-card {
-            flex: 0 0 auto;
-            width: 100%; /* Default width for one card at a time */
-            padding: 0 1rem; /* Adjust padding for spacing */
-            box-sizing: border-box;
+            flex-shrink: 0;
+            width: 100%; /* Default to one card per view on mobile */
         }
         @media (min-width: 768px) {
             .slider-card {
@@ -176,8 +175,8 @@
                 <h2 class="text-3xl font-bold text-center mb-10 text-red-600">Latest Offers ✨</h2>
                 <div class="relative">
                     <div class="slider-container">
-                        <div id="slider-wrapper" class="slider-wrapper">
-                            <div class="slider-card">
+                        <div id="latest-offers-slider" class="slider-wrapper -mx-4 md:-mx-2 lg:-mx-4">
+                            <div class="slider-card px-4 md:px-2 lg:px-4">
                                 <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
                                     <img src="ch5.jpg" alt="Samsung Charger 120w" class="w-full product-image">
                                     <div class="p-6 text-center">
@@ -188,7 +187,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="slider-card">
+                            <div class="slider-card px-4 md:px-2 lg:px-4">
                                 <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
                                     <img src="s10.jpg" alt="Smartwatch s10" class="w-full product-image">
                                     <div class="p-6 text-center">
@@ -199,7 +198,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="slider-card">
+                            <div class="slider-card px-4 md:px-2 lg:px-4">
                                 <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
                                     <img src="mz.jpg.jpg" alt="MZ M415sp speaker" class="w-full product-image">
                                     <div class="p-6 text-center">
@@ -210,7 +209,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="slider-card">
+                            <div class="slider-card px-4 md:px-2 lg:px-4">
                                 <div class="bg-gray-50 rounded-lg shadow-lg overflow-hidden card">
                                     <img src="h1.jpg" alt="boat Rockerz 425 pro max" class="w-full product-image">
                                     <div class="p-6 text-center">
@@ -221,12 +220,12 @@
                                     </div>
                                 </div>
                             </div>
-                            </div>
+                        </div>
                     </div>
-                    <button id="prev-btn" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg opacity-75 hover:opacity-100 transition-opacity z-10">
+                    <button id="latest-offers-prev-btn" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg opacity-75 hover:opacity-100 transition-opacity z-10">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                     </button>
-                    <button id="next-btn" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg opacity-75 hover:opacity-100 transition-opacity z-10">
+                    <button id="latest-offers-next-btn" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg opacity-75 hover:opacity-100 transition-opacity z-10">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </button>
                 </div>
@@ -238,43 +237,59 @@
         <section id="bogo-offers" class="py-16 bg-gray-50">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-10 text-red-600">Buy One Get One Free 🛍️</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
-                        <div class="relative">
-                            <img src="bogo1.jpg" alt="BOGO Airdopes1" class="w-full product-image">
-                            <span class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Buy One Get One Free</span>
-                        </div>
-                        <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold mb-2">Boat Airdopes</h3>
-                            <p class="text-gray-600 mb-4">Buy one pair of Airdopes, get a second pair absolutely free!</p>
-                            <p class="text-xl font-semibold text-red-600 mb-4">₹699</p>
-                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="BOGO Boat Airdopes">Shop Now</button>
+                <div class="relative">
+                    <div class="slider-container">
+                        <div id="bogo-offers-slider" class="slider-wrapper -mx-4 md:-mx-2 lg:-mx-4">
+                            <div class="slider-card px-4 md:px-2 lg:px-4">
+                                <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
+                                    <div class="relative">
+                                        <img src="bogo1.jpg" alt="BOGO Airdopes1" class="w-full product-image">
+                                        <span class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Buy One Get One Free</span>
+                                    </div>
+                                    <div class="p-6 text-center">
+                                        <h3 class="text-xl font-bold mb-2">Boat Airdopes</h3>
+                                        <p class="text-gray-600 mb-4">Buy one pair of Airdopes, get a second pair absolutely free!</p>
+                                        <p class="text-xl font-semibold text-red-600 mb-4">₹699</p>
+                                        <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="BOGO Boat Airdopes">Shop Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slider-card px-4 md:px-2 lg:px-4">
+                                <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
+                                    <div class="relative">
+                                        <img src="bogo2.jpg" alt="BOGO Airdopes2" class="w-full product-image">
+                                        <span class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Buy One Get One Free</span>
+                                    </div>
+                                    <div class="p-6 text-center">
+                                        <h3 class="text-xl font-bold mb-2">Boat Airdopes</h3>
+                                        <p class="text-gray-600 mb-4">Get two Airdopes for the price of one!</p>
+                                        <p class="text-xl font-semibold text-red-600 mb-4">₹699</p>
+                                        <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="BOGO Boat Airdopes 2">Shop Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slider-card px-4 md:px-2 lg:px-4">
+                                <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
+                                    <div class="relative">
+                                        <img src="bogo4.jpg" alt="BOGO Boat Airdopes3" class="w-full product-image">
+                                        <span class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Buy One Get One Free</span>
+                                    </div>
+                                    <div class="p-6 text-center">
+                                        <h3 class="text-xl font-bold mb-2">Boat Airdopes</h3>
+                                        <p class="text-gray-600 mb-4">Purchase one Airdopes and get another free!</p>
+                                        <p class="text-xl font-semibold text-red-600 mb-4">₹699</p>
+                                        <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="BOGO Boat Airdopes 3">Shop Now</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
-                        <div class="relative">
-                            <img src="bogo2.jpg" alt="BOGO Airdopes2" class="w-full product-image">
-                            <span class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Buy One Get One Free</span>
-                        </div>
-                        <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold mb-2">Boat Airdopes</h3>
-                            <p class="text-gray-600 mb-4">Get two Airdopes for the price of one!</p>
-                            <p class="text-xl font-semibold text-red-600 mb-4">₹699</p>
-                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="BOGO Boat Airdopes 2">Shop Now</button>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
-                        <div class="relative">
-                            <img src="bogo4.jpg" alt="BOGO Boat Airdopes3" class="w-full product-image">
-                            <span class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Buy One Get One Free</span>
-                        </div>
-                        <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold mb-2">Boat Airdopes</h3>
-                            <p class="text-gray-600 mb-4">Purchase one Airdopes and get another free!</p>
-                            <p class="text-xl font-semibold text-red-600 mb-4">₹699</p>
-                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="BOGO Boat Airdopes 3">Shop Now</button>
-                        </div>
-                    </div>
+                    <button id="bogo-offers-prev-btn" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg opacity-75 hover:opacity-100 transition-opacity z-10">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <button id="bogo-offers-next-btn" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg opacity-75 hover:opacity-100 transition-opacity z-10">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
                 </div>
             </div>
         </section>
@@ -284,43 +299,59 @@
         <section id="combo-offers" class="py-16">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-10 text-red-600">Combo Offers 🎁</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
-                        <div class="relative">
-                            <img src="s10co.jpg" alt="2 in 1 combo" class="w-full product-image">
-                            <span class="absolute top-4 right-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Combo</span>
-                        </div>
-                        <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold mb-2">2 in 1 combo</h3>
-                            <p class="text-gray-600 mb-4">Get our best-selling Earbuds and Smartwatch together for a discounted price.</p>
-                            <p class="text-xl font-semibold text-red-600 mb-4">₹1,099</p>
-                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="2 in 1 combo (Earbuds & Smartwatch)">Shop Now</button>
+                <div class="relative">
+                    <div class="slider-container">
+                        <div id="combo-offers-slider" class="slider-wrapper -mx-4 md:-mx-2 lg:-mx-4">
+                            <div class="slider-card px-4 md:px-2 lg:px-4">
+                                <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
+                                    <div class="relative">
+                                        <img src="s10co.jpg" alt="2 in 1 combo" class="w-full product-image">
+                                        <span class="absolute top-4 right-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Combo</span>
+                                    </div>
+                                    <div class="p-6 text-center">
+                                        <h3 class="text-xl font-bold mb-2">2 in 1 combo</h3>
+                                        <p class="text-gray-600 mb-4">Get our best-selling Earbuds and Smartwatch together for a discounted price.</p>
+                                        <p class="text-xl font-semibold text-red-600 mb-4">₹1,099</p>
+                                        <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="2 in 1 combo (Earbuds & Smartwatch)">Shop Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slider-card px-4 md:px-2 lg:px-4">
+                                <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
+                                    <div class="relative">
+                                        <img src="co2.jpg" alt="5 in 1 combo" class="w-full product-image">
+                                        <span class="absolute top-4 right-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Combo</span>
+                                    </div>
+                                    <div class="p-6 text-center">
+                                        <h3 class="text-xl font-bold mb-2">5 in 1 combo</h3>
+                                        <p class="text-gray-600 mb-4">Everything you need for music & smartness on the go. Great for travel!</p>
+                                        <p class="text-xl font-semibold text-red-600 mb-4">₹999</p>
+                                        <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="5 in 1 combo">Shop Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slider-card px-4 md:px-2 lg:px-4">
+                                <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
+                                    <div class="relative">
+                                        <img src="t900combo.jpg" alt="5 in 1 Combo without speaker and buds" class="w-full product-image">
+                                        <span class="absolute top-4 right-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Combo</span>
+                                    </div>
+                                    <div class="p-6 text-center">
+                                        <h3 class="text-xl font-bold mb-2">5 in 1 Combo</h3>
+                                        <p class="text-gray-600 mb-4">Monitor your health and enjoy your music with this perfect duo.</p>
+                                        <p class="text-xl font-semibold text-red-600 mb-4">₹699</p>
+                                        <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="5 in 1 combo (Smartwatch & Headphone)">Shop Now</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
-                        <div class="relative">
-                            <img src="co2.jpg" alt="5 in 1 combo" class="w-full product-image">
-                            <span class="absolute top-4 right-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Combo</span>
-                        </div>
-                        <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold mb-2">5 in 1 combo</h3>
-                            <p class="text-gray-600 mb-4">Everything you need for music & smartness on the go. Great for travel!</p>
-                            <p class="text-xl font-semibold text-red-600 mb-4">₹999</p>
-                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="5 in 1 combo">Shop Now</button>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
-                        <div class="relative">
-                            <img src="t900combo.jpg" alt="5 in 1 Combo without speaker and buds" class="w-full product-image">
-                            <span class="absolute top-4 right-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Combo</span>
-                        </div>
-                        <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold mb-2">5 in 1 Combo</h3>
-                            <p class="text-gray-600 mb-4">Monitor your health and enjoy your music with this perfect duo.</p>
-                            <p class="text-xl font-semibold text-red-600 mb-4">₹699</p>
-                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full hover:bg-red-700 transition-colors duration-300" data-product="5 in 1 combo (Smartwatch & Headphone)">Shop Now</button>
-                        </div>
-                    </div>
+                    <button id="combo-offers-prev-btn" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg opacity-75 hover:opacity-100 transition-opacity z-10">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <button id="combo-offers-next-btn" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg opacity-75 hover:opacity-100 transition-opacity z-10">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
                 </div>
             </div>
         </section>
@@ -333,7 +364,6 @@
             <div class="social-links mt-4 space-x-4">
                 <a href="https://www.facebook.com/share/1JhuQvHDYN/" class="hover:text-red-600">Facebook</a>
                 <a href="https://www.instagram.com/wholesale_watches_gadgets?igsh=MWZlZXVzaXlhNHM5OQ==" class="hover:text-red-600">Instagram</a>
-            
                 <a href="https://chat.whatsapp.com/JBEHnet2r1y4ARND106ALp?mode=ac_t" class="hover:text-red-600">WhatsApp</a>
             </div>
         </div>
@@ -353,79 +383,86 @@
             function openMobileMenu() {
                 mobileMenu.classList.add('open');
                 overlay.classList.remove('hidden');
-                document.body.style.overflow = 'hidden'; // Prevent scrolling
+                document.body.style.overflow = 'hidden';
             }
 
             function closeMobileMenu() {
                 mobileMenu.classList.remove('open');
                 overlay.classList.add('hidden');
-                document.body.style.overflow = ''; // Restore scrolling
+                document.body.style.overflow = '';
             }
 
             mobileMenuBtn.addEventListener('click', openMobileMenu);
             closeMobileMenuBtn.addEventListener('click', closeMobileMenu);
             overlay.addEventListener('click', closeMobileMenu);
             
-            // Close menu when a link is clicked
             mobileNavLinks.forEach(link => {
                 link.addEventListener('click', closeMobileMenu);
             });
 
-            // --- Product Slider Logic ---
-            const sliderWrapper = document.getElementById('slider-wrapper');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const sliderCards = document.querySelectorAll('.slider-card');
+            // --- Multiple Product Sliders Logic ---
+            function setupSlider(wrapperId, prevBtnId, nextBtnId) {
+                const sliderWrapper = document.getElementById(wrapperId);
+                const prevBtn = document.getElementById(prevBtnId);
+                const nextBtn = document.getElementById(nextBtnId);
+                const sliderCards = sliderWrapper.querySelectorAll('.slider-card');
 
-            let currentIndex = 0;
-            let cardWidth;
-            let visibleCards;
-
-            function updateSliderDimensions() {
-                // Determine how many cards are visible based on screen size
-                if (window.innerWidth >= 1024) {
-                    visibleCards = 4;
-                } else if (window.innerWidth >= 768) {
-                    visibleCards = 3;
-                } else {
-                    visibleCards = 1;
+                if (!sliderWrapper || !prevBtn || !nextBtn || sliderCards.length === 0) {
+                    console.error(`Slider elements for ID ${wrapperId} not found.`);
+                    return;
                 }
-                cardWidth = sliderCards[0].offsetWidth;
-                updateSliderPosition();
+
+                let currentIndex = 0;
+                let cardWidth;
+                let visibleCards;
+
+                function updateSliderDimensions() {
+                    if (window.innerWidth >= 1024) {
+                        visibleCards = 4;
+                    } else if (window.innerWidth >= 768) {
+                        visibleCards = 3;
+                    } else {
+                        visibleCards = 1;
+                    }
+                    cardWidth = sliderCards[0].offsetWidth; 
+                    updateSliderPosition();
+                }
+
+                function updateSliderPosition() {
+                    const totalCards = sliderCards.length;
+                    const maxIndex = totalCards - visibleCards;
+                    currentIndex = Math.max(0, Math.min(maxIndex, currentIndex));
+                    sliderWrapper.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+
+                    prevBtn.disabled = currentIndex === 0;
+                    nextBtn.disabled = currentIndex >= maxIndex;
+                    prevBtn.style.opacity = currentIndex === 0 ? 0.5 : 1;
+                    nextBtn.style.opacity = currentIndex >= maxIndex ? 0.5 : 1;
+                }
+
+                prevBtn.addEventListener('click', () => {
+                    currentIndex = currentIndex - 1;
+                    updateSliderPosition();
+                });
+
+                nextBtn.addEventListener('click', () => {
+                    currentIndex = currentIndex + 1;
+                    updateSliderPosition();
+                });
+
+                window.addEventListener('resize', () => {
+                    let resizeTimer;
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(updateSliderDimensions, 250);
+                });
+                
+                updateSliderDimensions();
             }
 
-            function updateSliderPosition() {
-                const totalCards = sliderCards.length;
-                const maxIndex = totalCards - visibleCards;
-                if (currentIndex > maxIndex) {
-                    currentIndex = maxIndex;
-                }
-                if (currentIndex < 0) {
-                    currentIndex = 0;
-                }
-                sliderWrapper.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-            }
-
-            prevBtn.addEventListener('click', () => {
-                currentIndex = Math.max(0, currentIndex - 1);
-                updateSliderPosition();
-            });
-
-            nextBtn.addEventListener('click', () => {
-                const totalCards = sliderCards.length;
-                const maxIndex = totalCards - visibleCards;
-                currentIndex = Math.min(maxIndex, currentIndex + 1);
-                updateSliderPosition();
-            });
-
-            // Re-calculate dimensions on resize
-            window.addEventListener('resize', () => {
-                // Debounce the resize event for performance
-                let resizeTimer;
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(updateSliderDimensions, 250);
-            });
-            updateSliderDimensions(); // Initial call
+            // Initialize all sliders
+            setupSlider('latest-offers-slider', 'latest-offers-prev-btn', 'latest-offers-next-btn');
+            setupSlider('bogo-offers-slider', 'bogo-offers-prev-btn', 'bogo-offers-next-btn');
+            setupSlider('combo-offers-slider', 'combo-offers-prev-btn', 'combo-offers-next-btn');
 
             // --- WhatsApp Button Logic ---
             const shopNowBtn = document.getElementById('shop-now-btn');
