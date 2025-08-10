@@ -40,25 +40,67 @@
         }
 
         /* Custom styles for the slider */
+        .slider-wrapper {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
         .slider-container {
-            overflow-x: scroll;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Firefox */
+            display: flex;
+            transition: transform 0.5s ease-in-out;
         }
         
-        .slider-container::-webkit-scrollbar {
-            display: none; /* Safari and Chrome */
+        .slider-slide {
+            flex: 0 0 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem; /* 6 (Tailwind spacing) */
+            padding: 0 1rem;
+            box-sizing: border-box;
         }
 
-        .slider-item {
-            flex: 0 0 300px; /* Adjust width as needed */
-            max-width: 300px;
+        .slider-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.3s;
+            border: none;
+            outline: none;
         }
 
+        .slider-control:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        #prev-slide {
+            left: 10px;
+        }
+
+        #next-slide {
+            right: 10px;
+        }
+
+        /* Media queries for responsive design */
         @media (min-width: 640px) {
-            .slider-item {
-                flex: 0 0 calc(33.333% - 16px); /* Show 3 items with gap on larger screens */
-                max-width: calc(33.333% - 16px);
+            .slider-slide {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .slider-slide {
+                grid-template-columns: repeat(3, 1fr);
             }
         }
     </style>
@@ -107,13 +149,16 @@
         <div class="container mx-auto px-4">
             <h2 id="category-title" class="text-3xl font-bold text-center mb-10 text-red-600">All Products</h2>
             
-            <div class="mb-16">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Our Top Picks</h3>
-                <div id="top-picks-slider" class="flex space-x-6 pb-4 slider-container">
+            <div id="product-slider-wrapper" class="slider-wrapper">
+                <div id="product-slider" class="slider-container">
                     </div>
+                <button id="prev-slide" class="slider-control hidden md:flex">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button id="next-slide" class="slider-control hidden md:flex">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
             </div>
-            <div id="product-list-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                </div>
 
             <div id="no-products-message" class="hidden text-center text-gray-600 text-lg mt-10">
                 No products found for this category. Please check back later!
@@ -194,76 +239,88 @@
                 { id: 'smartwatch-headphone-combo', name: 'Smartwatch & Airpods Combo', description: 'Monitor your health and enjoy your music with this perfect duo.', price: '1,099', image: 's10co.jpg', categories: ['combo-offers'] },
             ];
 
+            // SLIDER LOGIC
+            const productSlider = document.getElementById('product-slider');
+            const prevBtn = document.getElementById('prev-slide');
+            const nextBtn = document.getElementById('next-slide');
+            let currentSlide = 0;
+
+            function createProductCard(product) {
+                return `
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card text-center">
+                        <a href="product-details.html?id=${product.id}" class="block p-4 flex justify-center">
+                            <img src="${product.image}" alt="${product.name}" class="product-image mx-auto">
+                        </a>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">${product.name}</h3>
+                            <p class="text-gray-600 mb-4">${product.description}</p>
+                            <p class="text-xl font-semibold text-red-600 mb-4">₹${product.price}</p>
+                            <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full" data-product="${product.name}">Shop Now</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function displayAllProductsInSlider(products) {
+                if (products.length === 0) {
+                    document.getElementById('no-products-message').classList.remove('hidden');
+                    return;
+                }
+
+                // Group products into slides
+                // On large screens, we'll aim for 3 per slide. For smaller, the CSS grid handles it.
+                const slides = [];
+                const productsPerSlide = 3; 
+                for (let i = 0; i < products.length; i += productsPerSlide) {
+                    slides.push(products.slice(i, i + productsPerSlide));
+                }
+
+                slides.forEach(slideGroup => {
+                    const slideDiv = document.createElement('div');
+                    slideDiv.classList.add('slider-slide');
+                    slideGroup.forEach(product => {
+                        slideDiv.innerHTML += createProductCard(product);
+                    });
+                    productSlider.appendChild(slideDiv);
+                });
+
+                attachShopNowListeners();
+                updateSliderControls();
+            }
+
+            function slideTo(index) {
+                if (index < 0) {
+                    index = productSlider.children.length - 1;
+                } else if (index >= productSlider.children.length) {
+                    index = 0;
+                }
+                currentSlide = index;
+                productSlider.style.transform = `translateX(-${currentSlide * 100}%)`;
+                updateSliderControls();
+            }
+
+            function slideNext() {
+                slideTo(currentSlide + 1);
+            }
+
+            function slidePrev() {
+                slideTo(currentSlide - 1);
+            }
+
+            function updateSliderControls() {
+                if (productSlider.children.length <= 1) {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                } else {
+                    prevBtn.style.display = 'flex';
+                    nextBtn.style.display = 'flex';
+                }
+            }
+            
             // Function to get query parameters from the URL
             function getQueryParam(param) {
                 const urlParams = new URLSearchParams(window.location.search);
                 return urlParams.get(param);
-            }
-
-            // Function to display products
-            function displayProducts(productsToDisplay, categoryName) {
-                const productListGrid = document.getElementById('product-list-grid');
-                const categoryTitle = document.getElementById('category-title');
-                const noProductsMessage = document.getElementById('no-products-message');
-                
-                productListGrid.innerHTML = ''; // Clear existing products
-                
-                if (categoryName && categoryName !== 'All Products') {
-                    categoryTitle.textContent = categoryName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') + ' Gadgets';
-                } else {
-                    categoryTitle.textContent = 'All Products';
-                }
-
-                if (productsToDisplay.length === 0) {
-                    noProductsMessage.classList.remove('hidden');
-                } else {
-                    noProductsMessage.classList.add('hidden');
-                    productsToDisplay.forEach(product => {
-                        const productCardHtml = `
-                            <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
-                                <a href="product-details.html?id=${product.id}" class="block">
-                                    <img src="${product.image}" alt="${product.name}" class="w-full product-image">
-                                </a>
-                                <div class="p-6 text-center">
-                                    <h3 class="text-xl font-bold mb-2">${product.name}</h3>
-                                    <p class="text-gray-600 mb-4">${product.description}</p>
-                                    <p class="text-xl font-semibold text-red-600 mb-4">₹${product.price}</p>
-                                    <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full" data-product="${product.name}">Shop Now</button>
-                                </div>
-                            </div>
-                        `;
-                        productListGrid.insertAdjacentHTML('beforeend', productCardHtml);
-                    });
-                }
-                attachShopNowListeners();
-            }
-
-            // Function to populate the slider with a subset of products
-            function populateSlider() {
-                const sliderContainer = document.getElementById('top-picks-slider');
-                sliderContainer.innerHTML = ''; // Clear existing items
-
-                // Select a few products for the slider. You can choose any products you want to highlight.
-                // Here, we'll just take the first three products from the main list.
-                const topPicks = allProducts.slice(0, 3); 
-
-                topPicks.forEach(product => {
-                    const sliderItemHtml = `
-                        <div class="bg-white rounded-lg shadow-lg overflow-hidden card slider-item">
-                            <a href="product-details.html?id=${product.id}" class="block">
-                                <img src="${product.image}" alt="${product.name}" class="w-full product-image">
-                            </a>
-                            <div class="p-6 text-center">
-                                <h3 class="text-xl font-bold mb-2">${product.name}</h3>
-                                <p class="text-gray-600 mb-4">${product.description}</p>
-                                <p class="text-xl font-semibold text-red-600 mb-4">₹${product.price}</p>
-                                <button class="shop-item-btn bg-red-600 text-white py-2 px-6 rounded-full" data-product="${product.name}">Shop Now</button>
-                            </div>
-                        </div>
-                    `;
-                    sliderContainer.insertAdjacentHTML('beforeend', sliderItemHtml);
-                });
-                attachShopNowListeners();
             }
 
             // Function to attach event listeners to "Shop Now" buttons
@@ -291,14 +348,19 @@
 
             if (requestedCategory) {
                 filteredProducts = allProducts.filter(product => product.categories.includes(requestedCategory));
-                displayTitle = requestedCategory;
+                displayTitle = requestedCategory.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') + ' Gadgets';
             } else {
                 filteredProducts = allProducts;
                 displayTitle = 'All Products';
             }
+            
+            // Initial call to display the products in the new slider format
+            document.getElementById('category-title').textContent = displayTitle;
+            displayAllProductsInSlider(filteredProducts);
 
-            displayProducts(filteredProducts, displayTitle);
-            populateSlider(); // Call this function to display the slider
+            // Add event listeners for slider controls
+            prevBtn.addEventListener('click', slidePrev);
+            nextBtn.addEventListener('click', slideNext);
         });
     </script>
 </body>
