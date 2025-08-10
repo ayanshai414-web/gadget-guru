@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gadget Guru - Products</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
         body {
             font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+            overflow-x: hidden; /* Prevent horizontal scrolling on mobile */
         }
 
         .card {
@@ -23,16 +24,24 @@
         }
 
         .product-image {
-            object-fit: contain,cover;
+            object-fit: cover; /* This is the key change for consistent sizing */
             height: 300px;
+            width: 100%; /* Ensure the image spans the full width of the card */
+        }
+
+        /* Improved Mobile Menu Styles */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
         }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-    <!-- ===================================== -->
-    <!-- HEADER SECTION (Same as index.html for consistency) -->
-    <!-- ===================================== -->
     <header class="bg-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
             <a href="index.html" class="flex items-center space-x-2">
@@ -45,83 +54,95 @@
                 <a href="index.html#latest-offers" class="text-gray-600 hover:text-red-600 font-semibold">Latest Offers</a>
                 <a href="index.html#combo-offers" class="text-gray-600 hover:text-red-600 font-semibold">Combos</a>
                 <a href="index.html#bogo-offers" class="text-gray-600 hover:text-red-600 font-semibold">Buy One Get One Free</a>
-                <a href="index.html#contact" class="text-gray-600 hover:text-red-600 font-semibold">Contact</a>
+                <a href="about.html#contact" class="text-gray-600 hover:text-red-600 font-semibold">Contact</a>
             </nav>
             
-            <button class="md:hidden focus:outline-none mobile-menu-toggle">
+            <button id="mobile-menu-btn" class="md:hidden focus:outline-none">
                 <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                 </svg>
             </button>
         </div>
-        <div class="md:hidden mobile-menu hidden bg-white shadow-lg py-4">
-            <nav class="flex flex-col items-center space-y-4">
-                <a href="index.html" class="text-gray-600 hover:text-red-600 font-semibold">Home</a>
-                <a href="index.html#latest-offers" class="text-gray-600 hover:text-red-600 font-semibold">Latest Offers</a>
-                <a href="index.html#combo-offers" class="text-gray-600 hover:text-red-600 font-semibold">Combos</a>
-                <a href="index.html#bogo-offers" class="text-gray-600 hover:text-red-600 font-semibold">Buy One Get One Free</a>
-                <a href="about.html#contact" class="text-gray-600 hover:text-red-600 font-semibold">Contact</a>
+        <div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 bg-white shadow-lg p-6 z-50 mobile-menu">
+            <button id="close-mobile-menu-btn" class="absolute top-4 right-4 focus:outline-none">
+                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <nav class="flex flex-col space-y-4 mt-12">
+                <a href="index.html" class="text-gray-600 hover:text-red-600 font-semibold text-lg">Home</a>
+                <a href="index.html#latest-offers" class="text-gray-600 hover:text-red-600 font-semibold text-lg">Latest Offers</a>
+                <a href="index.html#combo-offers" class="text-gray-600 hover:text-red-600 font-semibold text-lg">Combos</a>
+                <a href="index.html#bogo-offers" class="text-gray-600 hover:text-red-600 font-semibold text-lg">Buy One Get One Free</a>
+                <a href="about.html#contact" class="text-gray-600 hover:text-red-600 font-semibold text-lg">Contact</a>
             </nav>
         </div>
+        <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
     </header>
 
     <main class="py-16">
         <div class="container mx-auto px-4">
-            <!-- Dynamic Heading for the Category -->
             <h2 id="category-title" class="text-3xl font-bold text-center mb-10 text-red-600">All Products</h2>
             
-            <!-- This is where the products will be displayed dynamically by JavaScript -->
-            <div id="product-list-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                <!-- Product cards will be inserted here by JavaScript -->
-            </div>
+            <div id="product-list-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                </div>
 
-            <!-- Message if no products are found for a category -->
             <div id="no-products-message" class="hidden text-center text-gray-600 text-lg mt-10">
                 No products found for this category. Please check back later!
             </div>
         </div>
     </main>
 
-    <!-- ===================================== -->
-    <!-- FOOTER SECTION (Same as index.html for consistency) -->
-    <!-- ===================================== -->
     <footer id="contact" class="bg-gray-800 text-gray-300 py-8">
         <div class="container mx-auto px-4 text-center">
             <p>&copy; 2025 Gadget Guru. All rights reserved.</p>
             <div class="social-links mt-4 space-x-4">
-                <a href="#" class="hover:text-red-600">Facebook</a>
-                <a href="#" class="hover:text-red-600">Instagram</a>
+                <a href="https://www.facebook.com/share/1JhuQvHDYN/" class="hover:text-red-600">Facebook</a>
+                <a href="https://www.instagram.com/wholesale_watches_gadgets?igsh=MWZlZXVzaXlhNHM5OQ==" class="hover:text-red-600">Instagram</a>
+                <a href="#" class="hover:text-red-600">Telegram</a>
+                <a href="https://chat.whatsapp.com/JBEHnet2r1y4ARND106ALp?mode=ac_t" class="hover:text-red-600">WhatsApp</a>
             </div>
         </div>
     </footer>
 
-    <!-- ===================================== -->
-    <!-- JAVASCRIPT FOR DYNAMIC PRODUCT LOADING -->
-    <!-- This script reads the URL and displays relevant products. -->
-    <!-- To add/edit products, modify the 'allProducts' array below. -->
-    <!-- ===================================== -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // YOUR WHATSAPP NUMBER: Replace '911234567890' with your number including the country code.
-            const whatsappNumber = '917383234749'; 
+            const whatsappNumber = '917383234749';
 
-            // Mobile menu toggle
-            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-            const mobileMenu = document.querySelector('.mobile-menu');
+            // --- MOBILE MENU LOGIC (Reusing the improved logic from previous response) ---
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const closeMobileMenuBtn = document.getElementById('close-mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('overlay');
+            const mobileNavLinks = mobileMenu.querySelectorAll('a');
 
-            if (mobileMenuToggle && mobileMenu) {
-                mobileMenuToggle.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
+            function openMobileMenu() {
+                mobileMenu.classList.add('open');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
             }
 
+            function closeMobileMenu() {
+                mobileMenu.classList.remove('open');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+
+            if (mobileMenuBtn && closeMobileMenuBtn && mobileMenu && overlay) {
+                mobileMenuBtn.addEventListener('click', openMobileMenu);
+                closeMobileMenuBtn.addEventListener('click', closeMobileMenu);
+                overlay.addEventListener('click', closeMobileMenu);
+            }
+            
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+
             // --- PRODUCT DATA ---
-            // This is your central list of all products.
-            // Add new products here, and assign them one or more categories.
             const allProducts = [
                 // Earbuds
                 { id: 'earbuds-pro', name: 'CMF buds', description: 'Noise-cancelling audio for a distraction-free experience.', price: '449', image: 'b5.jpg', categories: ['earbuds', 'latest-offers'] },
-                { id: 'earbuds-x2', name: 'Airpods pro ', description: 'experience the ultimate sound quality!', price: '499', image: 'b2.jpg', categories: ['earbuds', 'latest-offers'] },
+                { id: 'earbuds-x2', name: 'Airpods pro ', description: 'Experience the ultimate sound quality!', price: '499', image: 'b2.jpg', categories: ['earbuds', 'latest-offers'] },
                 { id: 'earbuds-lite', name: 'Noise Master Buds', description: 'Lightweight and comfortable for all-day wear.', price: '525', image: 'b3.jpg', categories: ['earbuds'] },
                 
                 // Speakers
@@ -137,7 +158,7 @@
                 { id: 'smartwatch-v2', name: 'Smartwatch Ultra', description: 'Track your fitness and stay connected on the go.', price: '449', image: 'smart.jpg.jpg', categories: ['accessories', 'latest-offers'] },
                 { id: 'power-bank', name: 'Boat Power Bank', description: 'Never run out of battery with our high-capacity power bank.', price: '649', image: 'po1.jpg', categories: ['accessories', 'latest-offers'] },
                 { id: 'noise-cancelling-headphones', name: 'Noise-Cancelling Headphones', description: 'Purchase one set of headphones and get another free!', price: '599', image: 'p9.jpg', categories: ['accessories', 'bogo-offers'] },
-                { id: 'phone-stand', name: 'Adjustable Phone Stand', description: 'Perfect for hands-free viewing and video calls.', price: '3,999', image: 'st2.jpg', categories: ['accessories'] },
+                { id: 'phone-stand', name: 'Adjustable Phone Stand', description: 'Perfect for hands-free viewing and video calls.', price: '399', image: 'st2.jpg', categories: ['accessories'] },
 
                 // Combo Offers
                 { id: 'earbuds-charger-combo', name: 'Buds3 pro & Charger Combo', description: 'Get our best-selling earbuds and a fast charger together for a discounted price.', price: '799', image: 'samcombo.jpg', categories: ['combo-offers'] },
@@ -160,16 +181,16 @@
                 productListGrid.innerHTML = ''; // Clear existing products
                 
                 // Set the title based on the category
-                if (categoryName) {
+                if (categoryName && categoryName !== 'All Products') {
                     categoryTitle.textContent = categoryName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') + ' Gadgets';
                 } else {
                     categoryTitle.textContent = 'All Products';
                 }
 
                 if (productsToDisplay.length === 0) {
-                    noProductsMessage.classList.remove('hidden'); // Show message if no products
+                    noProductsMessage.classList.remove('hidden');
                 } else {
-                    noProductsMessage.classList.add('hidden'); // Hide message if products are found
+                    noProductsMessage.classList.add('hidden');
                     productsToDisplay.forEach(product => {
                         const productCardHtml = `
                             <div class="bg-white rounded-lg shadow-lg overflow-hidden card">
@@ -187,8 +208,6 @@
                         productListGrid.insertAdjacentHTML('beforeend', productCardHtml);
                     });
                 }
-
-                // Attach WhatsApp event listeners to newly created buttons
                 attachShopNowListeners();
             }
 
@@ -196,7 +215,7 @@
             function attachShopNowListeners() {
                 const shopItemBtns = document.querySelectorAll('.shop-item-btn');
                 shopItemBtns.forEach(button => {
-                    button.removeEventListener('click', handleShopNowClick); // Prevent duplicate listeners
+                    button.removeEventListener('click', handleShopNowClick);
                     button.addEventListener('click', handleShopNowClick);
                 });
             }
@@ -216,21 +235,15 @@
             let displayTitle = '';
 
             if (requestedCategory) {
-                // Filter products based on the category in the URL
-                filteredProducts = allProducts.filter(product => 
-                    product.categories.includes(requestedCategory)
-                );
+                filteredProducts = allProducts.filter(product => product.categories.includes(requestedCategory));
                 displayTitle = requestedCategory;
             } else {
-                // If no category is specified, show all products
                 filteredProducts = allProducts;
                 displayTitle = 'All Products';
             }
 
-            // Display the products
             displayProducts(filteredProducts, displayTitle);
         });
     </script>
 </body>
 </html>
-
